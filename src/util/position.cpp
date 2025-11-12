@@ -39,3 +39,10 @@ Vector2 getSize(const Texture& texture) {
 Rectangle getBox(const Texture& texture) {
    return {0.f, 0.f, (float)texture.width, (float)texture.height};
 }
+
+// Camera functions
+
+Rectangle getCameraBounds(const Camera2D& camera) {
+   Vector2 pos = GetScreenToWorld2D({0, 0}, camera);
+   return {pos.x, pos.y, GetScreenWidth() / camera.zoom, GetScreenHeight() / camera.zoom};
+}

@@ -21,4 +21,8 @@ Vector2 getOrigin(const char* text, float fontSize, float spacing);
 Vector2 getSize(const Texture& texture);
 Rectangle getBox(const Texture& texture);
 
+// Camera functions
+
+Rectangle getCameraBounds(const Camera2D& camera);
+
 #endif

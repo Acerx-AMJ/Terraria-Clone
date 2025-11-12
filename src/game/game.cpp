@@ -12,6 +12,7 @@
 
 Game::Game() {
    srand(time(nullptr));
+   SetConfigFlags(FLAG_VSYNC_HINT);
    InitWindow(GetMonitorWidth(GetCurrentMonitor()), GetMonitorHeight(GetCurrentMonitor()), "Terraria Clone");
    ToggleFullscreen();
    SetTargetFPS(60);
