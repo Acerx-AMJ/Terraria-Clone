@@ -24,9 +24,9 @@ namespace {
 GameState::GameState() {
    blocks = std::vector<std::vector<Block>>(SIZE_Y, std::vector<Block>(SIZE_X, Block{}));
    siv::PerlinNoise perlin {(siv::PerlinNoise::seed_type)rand()};
-   siv::PerlinNoise sandNoise {(siv::PerlinNoise::seed_type)rand()};
 
    int y = SIZE_Y * 0.5f;
+   int rockOffset = 12.f;
    
    for (int x = 0; x < SIZE_X; ++x) {
       if (blocks[y][x].tex) {
@@ -36,28 +36,45 @@ GameState::GameState() {
 
       if (noise < .2f) {
          y -= random(0, 3);
+         rockOffset -= random(0, 2);
       } else if (noise < .4) {
          y -= random(0, 2);
+         rockOffset -= random(0, 1);
       } else if (noise < .65f) {
          y += random(-1, 1);
+         rockOffset += random(-1, 1);
       } else if (noise < .85f) {
          y += random(0, 2);
+         rockOffset += random(0, 1);
       } else {
          y += random(0, 3);
+         rockOffset += random(0, 2);
       }
 
       if (y < SIZE_Y * .3f) {
          y++;
+         rockOffset++;
       } else if (y > SIZE_Y * .6f) {
          y--;
+         rockOffset--;
       }
       y = std::clamp(y, int(SIZE_Y * .25f), int(SIZE_Y * 65.f));
+      rockOffset = std::clamp(rockOffset, 5, 25);
       
       blocks[y][x].tex = &ResourceManager::get().getTexture("grass"s);
+      int dirtDepth = 0;
       for (int yy = y + 1; yy < SIZE_Y; ++yy) {
-         blocks[yy][x].tex = &ResourceManager::get().getTexture("dirt"s);
+         if (dirtDepth < rockOffset) {
+            dirtDepth++;
+            blocks[yy][x].tex = &ResourceManager::get().getTexture("dirt"s);
+         } else {
+            blocks[yy][x].tex = &ResourceManager::get().getTexture("stone"s);
+         }
       }
    }
+
+   siv::PerlinNoise sandNoise {(siv::PerlinNoise::seed_type)rand()};
+   siv::PerlinNoise dirtNoise {(siv::PerlinNoise::seed_type)rand()};
 
    for (int x = 0; x < SIZE_X; ++x) {
       for (int y = 0; y < SIZE_Y; ++y) {
@@ -67,8 +84,16 @@ GameState::GameState() {
             }
             continue;
          }
-         if ((sandNoise.octave2D(x * 0.01f, y * 0.01f, 4) + 1.f) / 2.f >= .75f) {
+
+         if ((sandNoise.octave2D(x * 0.009f, y * 0.009f, 4) + 1.f) / 2.f >= .75f) {
             blocks[y][x].tex = &ResourceManager::get().getTexture("sand"s);
+         } else {
+            float noise = (dirtNoise.octave2D(x * 0.04f, y * 0.04f, 4) + 1.f) / 2.f;
+            if (noise >= .825f) {
+               blocks[y][x].tex = &ResourceManager::get().getTexture("clay"s);
+            } else if (noise <= .2f) {
+               blocks[y][x].tex = &ResourceManager::get().getTexture("dirt"s);
+            }
          }
       }
    }
