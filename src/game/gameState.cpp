@@ -106,8 +106,9 @@ GameState::GameState() {
 // Update functions
 
 void GameState::update() {
-   camera.offset.x += (IsKeyDown(KEY_A) - IsKeyDown(KEY_D)) * 500.f * GetFrameTime();
-   camera.offset.y += (IsKeyDown(KEY_W) - IsKeyDown(KEY_S)) * 500.f * GetFrameTime();
+   float speed = (IsKeyDown(KEY_LEFT_SHIFT) ? 1000.f : 500.f);
+   camera.offset.x += (IsKeyDown(KEY_A) - IsKeyDown(KEY_D)) * speed * GetFrameTime();
+   camera.offset.y += (IsKeyDown(KEY_W) - IsKeyDown(KEY_S)) * speed * GetFrameTime();
 
    float wheel = GetMouseWheelMove();
    if (wheel != 0.f) {
