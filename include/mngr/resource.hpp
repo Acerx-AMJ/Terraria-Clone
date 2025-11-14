@@ -8,16 +8,9 @@
 #include <unordered_map>
 #include <raylib.h>
 
-// Resource manager class
+// Resource manager
 
-class ResourceManager {
-   std::unordered_map<std::string, Texture> textures;
-   std::unordered_map<std::string, Font> fonts;
-
-   Texture& getFallbackTexture();
-   Font& getFallbackFont();
-
-public:
+struct ResourceManager {
    ResourceManager() = default;
    ~ResourceManager() = default;
 
@@ -41,6 +34,15 @@ public:
 
    bool textureExists(const std::string& name);
    bool fontExists(const std::string& name);
+
+   // Fallback functions
+
+   Texture& getFallbackTexture();
+   Font& getFallbackFont();
+
+private:
+   std::unordered_map<std::string, Texture> textures;
+   std::unordered_map<std::string, Font> fonts;
 };
 
 #endif

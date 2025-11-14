@@ -3,13 +3,22 @@
 
 // Includes
 
+#include <string>
 #include <raylib.h>
 
 // Block
 
 struct Block {
+   enum class Type { air, grass, dirt, stone, sand, water };
+   
    Texture* tex = nullptr;
-   unsigned char a;
+   Type type = Type::air;
+   int id = 0;
 };
+
+// Set/get block function
+
+void setBlock(Block& block, const std::string& name);
+Color& getBlockColor(int blockId);
 
 #endif

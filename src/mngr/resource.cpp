@@ -4,7 +4,7 @@
 
 #include "util/format.hpp"
 
-// Load/get functions
+// Load functions
 
 Texture& ResourceManager::loadTexture(const std::string& name, const std::filesystem::path& path) {
    if (textureExists(name)) {
@@ -73,7 +73,7 @@ bool ResourceManager::fontExists(const std::string& name) {
    return fonts.count(name);
 }
 
-// Private functions
+// Fallback functions
 
 Texture& ResourceManager::getFallbackTexture() {
    static Texture fallbackTexture;

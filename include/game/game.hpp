@@ -5,16 +5,14 @@
 
 #include "game/state.hpp"
 
-// Game class
+// Game
 
-class Game {
-   States states;
-
-public:
+struct Game {
    Game();
    ~Game();
 
    void run();
+   States states;
 };
 
 #endif

@@ -9,15 +9,9 @@
 #include <vector>
 #include <raylib.h>
 
-// Sound manager class
+// Sound manager
 
-class SoundManager {
-   std::unordered_map<std::string, std::vector<Sound*>> savedSounds;
-   std::unordered_map<std::string, Sound> sounds;
-   std::unordered_map<std::string, Music> music;
-   Music* currentMusic = nullptr;
-
-public:
+struct SoundManager {
    SoundManager() = default;
    ~SoundManager() = default;
 
@@ -51,6 +45,12 @@ public:
    // Update functions
 
    void update();
+
+private:
+   std::unordered_map<std::string, std::vector<Sound*>> savedSounds;
+   std::unordered_map<std::string, Sound> sounds;
+   std::unordered_map<std::string, Music> music;
+   Music* currentMusic = nullptr;
 };
 
 #endif

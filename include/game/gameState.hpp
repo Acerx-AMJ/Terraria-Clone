@@ -7,13 +7,9 @@
 #include "objs/block.hpp"
 #include <vector>
 
-// Game state class
+// Game state
 
-class GameState: public State {
-   std::vector<std::vector<Block>> blocks;
-   Camera2D camera;
-
-public:
+struct GameState: public State {
    GameState();
    ~GameState() = default;
 
@@ -29,6 +25,11 @@ public:
 
    void render() override;
    void change(States& states) override;
+
+private:   
+   std::vector<std::vector<Block>> blocks;
+   Image blockMap;
+   Camera2D camera;
 };
 
 #endif

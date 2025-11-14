@@ -8,18 +8,9 @@
 
 using namespace std::string_literals;
 
-// Loading state class
+// Loading state
 
-class LoadingState: public State {
-   enum class Load { fonts, textures, sounds, soundSetup, music, count };
-
-   std::string splash;
-   std::string text = "Loading Fonts... "s;
-   Load load = Load::fonts;
-   float waitTimer = 0.f;
-   float rotation = 0.f;
-
-public:
+struct LoadingState: public State {
    LoadingState();
    ~LoadingState() = default;
 
@@ -36,6 +27,15 @@ public:
    void render() override;
    void change(States& states) override;
    std::string getSplashMessage();
+
+private:
+   enum class Load { fonts, textures, sounds, soundSetup, music, count };
+
+   std::string splash;
+   std::string text = "Loading Fonts... "s;
+   Load load = Load::fonts;
+   float waitTimer = 0.f;
+   float rotation = 0.f;
 };
 
 #endif

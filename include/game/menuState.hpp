@@ -6,13 +6,9 @@
 #include "game/state.hpp"
 #include "util/button.hpp"
 
-// Menu state class
+// Menu state
 
-class MenuState: public State {
-   Button playButton, optionsButton, quitButton;
-   bool playing = false;
-   
-public:
+struct MenuState: public State {
    MenuState();
    ~MenuState() = default;
 
@@ -28,6 +24,10 @@ public:
 
    void render() override;
    void change(States& states) override;
+
+private:
+   Button playButton, optionsButton, quitButton;
+   bool playing = false;
 };
 
 #endif

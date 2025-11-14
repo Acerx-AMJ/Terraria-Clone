@@ -12,10 +12,9 @@ class State;
 using StatePtr = std::unique_ptr<State>;
 using States = std::deque<StatePtr>;
 
-// Polymorphic state class
+// Polymorphic state
 
-class State {
-public:
+struct State {
    bool quitState = false;
    bool fadingIn = true, fadingOut = false;
    float fadeTimer = 0.f;
